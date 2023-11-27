@@ -17,9 +17,9 @@ export default async function Page() {
                         Novelia
                     </h1>
                     <p className="mt-4">
-                        A simple novel app for writing & reading.
+                        Platform untuk menulis dan membaca novel.
                     </p>
-                    <p>
+                    <p className="flex gap-4 mt-8 items-center justify-center">
                         <Link href="/login">
                             Login
                         </Link>

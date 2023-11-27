@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import { Textbox } from '@/components/Form'
 import { Button } from '@/components/Button'
 
@@ -7,7 +8,7 @@ export default function LoginPage() {
             <div className="container">
                 <div className="mx-auto max-w-[340px] text-center">
                     <h1 className="text-4xl font-medium">
-                        Login
+                        Masuk
                     </h1>
                     <form className="mt-10">
                         <div className="mb-4">
@@ -17,9 +18,12 @@ export default function LoginPage() {
                             <Textbox placeholder="Password" type="password" />
                         </div>
                         <div>
-                            <Button type="submit">
+                            <Button type="submit" className="flex gap-3 w-full rounded-[40px] bg-app-primary text-white">
                                 Login
                             </Button>
+                        </div>
+                        <div className="mt-6 text-sm text-center">
+                            Atau <Link href="/register" className="font-semibold border-b border-black">daftar</Link> jika belum punya akun.
                         </div>
                     </form>
                 </div>

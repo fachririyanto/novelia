@@ -1,10 +1,15 @@
-interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {}
+interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+    children: React.ReactNode,
+    className?: string,
+}
 
-export function Button(props: ButtonProps) {
+export function Button({ children, className, ...rest }: ButtonProps) {
     return (
         <button
-            className="flex w-full h-11 px-4 bg-app-primary text-white font-semibold uppercase rounded-[40px] border-0 outline-none text-sm items-center justify-center"
-            { ...props }
-            />
+            className={ `h-11 px-6 font-semibold uppercase border-0 outline-none text-sm items-center justify-center ${className}` }
+            { ...rest }
+        >
+            { children }
+        </button>
     )
 }
