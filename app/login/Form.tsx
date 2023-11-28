@@ -112,7 +112,7 @@ export function FormLogin() {
                 ) }
             </div>
             <div>
-                <Button type="submit" className="flex gap-3 w-full rounded-[40px] bg-app-primary text-white">
+                <Button alias="button" type="submit" variant="primary" className="flex gap-3 w-full">
                     {
                         loading ? (
                             <Spinner width={ 24 } bgColor="#fff" color="#00A9FF" />

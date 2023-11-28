@@ -1,3 +1,5 @@
+'use server'
+
 import { createSupabaseServerClient } from '../supabase/server'
 
 // get user session

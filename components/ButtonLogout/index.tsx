@@ -12,7 +12,9 @@ export function ButtonLogout() {
     return (
         <form action={ handleLogout }>
             <Button
+                alias="button"
                 type="submit"
+                variant="primary"
                 className="inline-flex rounded-[40px] bg-app-primary text-white"
             >
                 Logout

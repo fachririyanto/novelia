@@ -11,7 +11,7 @@ export default async function DashboardPage() {
                     Dashboard
                 </h1>
                 <p className="mt-2 text-gray-500">
-                    Welcome back, {profile?.full_name}
+                    Welcome back, { profile?.full_name }
                 </p>
                 <div className="mt-4">
                     <ButtonLogout />

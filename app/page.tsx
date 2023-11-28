@@ -1,5 +1,5 @@
-import { createSupabaseServerClient } from '@/lib/supabase/server'
-import Link from 'next/link'
+import { getSession } from '@/lib/actions'
+import { Button } from '@/components/Button'
 
 export default async function Page() {
     /*
@@ -8,6 +8,8 @@ export default async function Page() {
 
     console.log(data)
     */
+
+    const session = await getSession()
 
     return (
         <section className="py-20">
@@ -20,12 +22,20 @@ export default async function Page() {
                         Platform untuk menulis dan membaca novel.
                     </p>
                     <p className="flex gap-4 mt-8 items-center justify-center">
-                        <Link href="/login">
-                            Login
-                        </Link>
-                        <Link href="/register">
-                            Register
-                        </Link>
+                        { session ? (
+                            <Button alias="link" href="/dashboard">
+                                Dashboard
+                            </Button>
+                        ) : (
+                            <>
+                                <Button alias="link" href="/login" className="min-w-[120px]">
+                                    Login
+                                </Button>
+                                <Button alias="link" href="/register" className="min-w-[120px]">
+                                    Register
+                                </Button>
+                            </>
+                        ) }
                     </p>
                 </div>
             </div>
