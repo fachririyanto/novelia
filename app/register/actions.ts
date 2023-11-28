@@ -2,10 +2,21 @@
 
 import { createSupabaseServerClient } from '@/lib/supabase/server'
 import { z } from 'zod'
-import { FormSchema } from '../schema'
+import { FormSchema } from './schema'
 
 export async function createUser(formData: z.infer<typeof FormSchema>) {
     const supabase = await createSupabaseServerClient()
+
+    // check username availability
+    const { data } = await supabase
+        .from('nvl_profiles')
+        .select('username')
+        .eq('username', formData.username)
+        .single()
+
+    if (data) {
+        throw new Error('Username already taken')
+    }
 
     // save new user
     const saveNewUser = await supabase.auth.signUp({
