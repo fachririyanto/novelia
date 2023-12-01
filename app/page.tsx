@@ -1,3 +1,5 @@
+'use server'
+
 import { getSession } from '@/lib/actions'
 import { Button } from '@/components/Button'
 
@@ -16,10 +18,10 @@ export default async function Page() {
             <div className="container">
                 <div className="mx-auto max-w-[640px] text-center">
                     <h1 className="text-5xl font-medium">
-                        Novelia
+                        { process.env.NEXT_PUBLIC_APP_NAME }
                     </h1>
                     <p className="mt-4">
-                        Platform untuk menulis dan membaca novel.
+                        { process.env.NEXT_PUBLIC_APP_DESC }
                     </p>
                     <p className="flex gap-4 mt-8 items-center justify-center">
                         { session ? (

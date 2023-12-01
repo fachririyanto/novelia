@@ -1,5 +1,11 @@
+import type { Metadata } from 'next'
 import { getUserProfile } from '@/lib/actions'
 import { ButtonLogout } from '@/components/ButtonLogout'
+
+export const metadata: Metadata = {
+    title: 'Dashboard',
+    description: 'Selamat datang di Novelia!',
+}
 
 export default async function DashboardPage() {
     const profile = await getUserProfile()

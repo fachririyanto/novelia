@@ -68,12 +68,7 @@ export async function middleware(req: NextRequest) {
             return NextResponse.redirect(redirectUri.toString())
         }
     } else {
-        const privateAuthPath = [
-            '/dashboard',
-            '/dashboard/:path*',
-        ]
-
-        if (privateAuthPath.includes(req.nextUrl.pathname)) {
+        if (req.nextUrl.pathname.startsWith('/dashboard')) {
             const redirectUri = req.nextUrl.clone()
             redirectUri.pathname = '/login'
             return NextResponse.redirect(redirectUri.toString())
@@ -85,6 +80,8 @@ export async function middleware(req: NextRequest) {
 
 export const config = {
     matcher: [
+        '/',
+
         // public user
         '/login',
         '/register',
