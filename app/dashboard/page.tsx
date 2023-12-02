@@ -3,7 +3,7 @@ import { getUserProfile } from '@/lib/actions'
 import { ButtonLogout } from '@/components/ButtonLogout'
 
 export const metadata: Metadata = {
-    title: 'Dashboard',
+    title: 'Dashboard - ' + process.env.NEXT_PUBLIC_APP_NAME,
     description: 'Selamat datang di Novelia!',
 }
 

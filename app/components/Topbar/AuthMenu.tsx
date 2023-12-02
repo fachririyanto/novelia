@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect } from 'react'
 import Link from 'next/link'
 import { supabase } from '@/lib/supabase/client'
+import { getUploadUrl } from '@/lib/functions'
 import { ImageCover } from '@/components/Images'
 import { Button } from '@/components/Button'
 
@@ -68,23 +69,23 @@ export function AuthMenu({ email, profile }: AuthMenuProps) {
                         widthRatio={ 40 }
                         heightRatio={ 40 }
                         loading="lazy"
-                        src="/images/default/mistery-man.png"
+                        src={ profile?.photo ? getUploadUrl(profile.photo) : `/images/default/mistery-man.png` }
                         alt={ email }
                     />
                 </a>
                 <ul className={ `${openUserMenu ? 'block' : 'hidden'} absolute top-12 right-0 bg-white border border-gray-100 rounded-md shadow-sm p-5 w-[300px]` }>
                     <li className="mb-3 pb-5 border-b border-gray-100">
                         <h3 className="mb-1">{ profile?.full_name }</h3>
-                        <span className="block font-medium text-sm normal-case">{ email }</span>
+                        <span className="block font-medium text-sm normal-case font-normal text-app-font-gray">{ email }</span>
                     </li>
                     <li>
-                        <Link href="/dashboard" className="block py-2 hover:text-primary" onClick={ closeMenu }>Dashboard</Link>
+                        <Link href="/dashboard" className="block py-2 hover:text-app-primary" onClick={ closeMenu }>Dashboard</Link>
                     </li>
                     <li>
-                        <Link href="/dashboard/tulisanku" className="block py-2 hover:text-primary" onClick={ closeMenu }>Tulisanku</Link>
+                        <Link href="/dashboard/tulisanku" className="block py-2 hover:text-app-primary" onClick={ closeMenu }>Tulisanku</Link>
                     </li>
                     <li>
-                        <Link href="/dashboard/ubah-profil" className="block py-2 hover:text-primary" onClick={ closeMenu }>Ubah Profil</Link>
+                        <Link href="/dashboard/ubah-profil" className="block py-2 hover:text-app-primary" onClick={ closeMenu }>Ubah Profil</Link>
                     </li>
                     <li className="mt-3 pt-5 border-t border-gray-100">
                         <Button alias="button" className="flex w-full" variant="primary" onClick={ handleLogout }>Logout</Button>

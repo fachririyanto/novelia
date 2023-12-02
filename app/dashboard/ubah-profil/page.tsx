@@ -13,8 +13,8 @@ export default async function Page() {
     return (
         <section className="py-20">
             <div className="container">
-                <div className="mx-auto max-w-[340px] text-center">
-                    <h1 className="text-4xl font-semibold leading-tight">
+                <div className="mx-auto max-w-[340px]">
+                    <h1 className="text-4xl font-semibold leading-tight text-center">
                         Ubah Profil
                     </h1>
                     <FormUbahProfil { ...profile } />

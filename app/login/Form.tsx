@@ -9,11 +9,15 @@ import { initialFormFields, FormSchema } from './schema'
 import { getErrorMessage } from '@/lib/error-handling'
 
 import Link from 'next/link'
-import { Textbox } from '@/components/Form'
-import { Button } from '@/components/Button'
-import { Alert } from '@/components/Alert'
-import { Spinner } from '@/components/Spinner'
 import { doLogin } from './actions'
+
+import {
+    Alert,
+    Button,
+    Textbox,
+    ErrorMessage,
+    Spinner,
+} from '@/components'
 
 export function FormLogin() {
     const [loading, setLoading] = useState<boolean>(false)
@@ -35,7 +39,7 @@ export function FormLogin() {
     } = useForm<z.infer<typeof FormSchema>>({
         resolver: zodResolver(FormSchema),
         defaultValues: initialFormFields,
-        mode: 'onChange',
+        mode: 'onSubmit',
     })
 
     const onSubmit: SubmitHandler<z.infer<typeof FormSchema>> = async (data) => {
@@ -90,7 +94,7 @@ export function FormLogin() {
                     />
 
                 { errors.email && (
-                    FormErrorMessage({ message: errors.email.message || 'Email is required' })
+                    ErrorMessage({ message: errors.email.message || 'Email is required' })
                 ) }
             </div>
             <div className="mb-6">
@@ -108,7 +112,7 @@ export function FormLogin() {
                     />
 
                 { errors.password && (
-                    FormErrorMessage({ message: errors.password.message || 'Password is required' })
+                    ErrorMessage({ message: errors.password.message || 'Password is required' })
                 ) }
             </div>
             <div>
@@ -125,13 +129,5 @@ export function FormLogin() {
                 Atau <Link href="/register" className="font-semibold border-b border-black">daftar</Link> jika belum punya akun.
             </div>
         </form>
-    )
-}
-
-function FormErrorMessage({ message }: { message: string }) {
-    return (
-        <p className="mt-1 text-sm text-red-500 text-left">
-            { message }
-        </p>
     )
 }

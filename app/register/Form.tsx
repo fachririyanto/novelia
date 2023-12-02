@@ -9,10 +9,13 @@ import { initialFormFields, FormSchema } from './schema'
 import { createUser } from './actions'
 import { getErrorMessage } from '@/lib/error-handling'
 
-import { Textbox } from '@/components/Form'
-import { Button } from '@/components/Button'
-import { Alert } from '@/components/Alert'
-import { Spinner } from '@/components/Spinner'
+import {
+    Alert,
+    Button,
+    Textbox,
+    ErrorMessage,
+    Spinner,
+} from '@/components'
 
 export default function FormRegister() {
     const [loading, setLoading] = useState<boolean>(false)
@@ -32,7 +35,7 @@ export default function FormRegister() {
     } = useForm<z.infer<typeof FormSchema>>({
         resolver: zodResolver(FormSchema),
         defaultValues: initialFormFields,
-        mode: 'onChange',
+        mode: 'onSubmit',
     })
 
     const onSubmit: SubmitHandler<z.infer<typeof FormSchema>> = async (data) => {
@@ -88,7 +91,7 @@ export default function FormRegister() {
                     />
 
                 { errors.email && (
-                    FormErrorMessage({ message: errors.email.message || 'Email is required' })
+                    ErrorMessage({ message: errors.email.message || 'Email is required' })
                 ) }
             </div>
             <div className="mb-4">
@@ -106,7 +109,7 @@ export default function FormRegister() {
                     />
 
                 { errors.username && (
-                    FormErrorMessage({ message: errors.username.message || 'Username is required' })
+                    ErrorMessage({ message: errors.username.message || 'Username is required' })
                 ) }
             </div>
             <div className="mb-4">
@@ -124,7 +127,7 @@ export default function FormRegister() {
                     />
 
                 { errors.fullname && (
-                    FormErrorMessage({ message: errors.fullname.message || 'Full Name is required' })
+                    ErrorMessage({ message: errors.fullname.message || 'Full Name is required' })
                 ) }
             </div>
             <div className="mb-4">
@@ -142,7 +145,7 @@ export default function FormRegister() {
                     />
 
                 { errors.password && (
-                    FormErrorMessage({ message: errors.password.message || 'Password is required' })
+                    ErrorMessage({ message: errors.password.message || 'Password is required' })
                 ) }
             </div>
             <div className="mb-6">
@@ -160,7 +163,7 @@ export default function FormRegister() {
                     />
 
                 { errors.confirmPassword && (
-                    FormErrorMessage({ message: errors.confirmPassword.message || 'Confirm Password is required' })
+                    ErrorMessage({ message: errors.confirmPassword.message || 'Confirm Password is required' })
                 ) }
             </div>
             <div>
@@ -177,13 +180,5 @@ export default function FormRegister() {
                 Atau <Link href="/login" className="font-semibold border-b border-black">masuk</Link> jika sudah punya akun.
             </div>
         </form>
-    )
-}
-
-function FormErrorMessage({ message }: { message: string }) {
-    return (
-        <p className="mt-1 text-sm text-red-500 text-left">
-            { message }
-        </p>
     )
 }

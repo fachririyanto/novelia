@@ -12,11 +12,12 @@ export async function uploadPhoto(file: File) {
     // setup filename
     const fileExt = file.name.split('.').pop()
     const fileName = `${session.data.session?.user.id}.${fileExt}`
+    const filePath = `users/${fileName}`
 
     // upload photo
     const { error } = await supabase.storage
         .from('nvl_media')
-        .upload(`users/${fileName}`, file, {
+        .upload(filePath, file, {
             cacheControl: '3600',
             upsert: true,
             contentType: 'image/*',
@@ -26,5 +27,5 @@ export async function uploadPhoto(file: File) {
         throw error
     }
 
-    return `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/nvl_media/users/${fileName}`
+    return filePath
 }

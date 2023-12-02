@@ -1,3 +1,8 @@
 import { Textbox, TextboxWithIcon } from './Textbox'
+import { ErrorMessage } from './ErrorMessage'
 
-export { Textbox, TextboxWithIcon }
+export {
+    Textbox,
+    TextboxWithIcon,
+    ErrorMessage,
+}

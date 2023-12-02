@@ -12,6 +12,7 @@ const config: Config = {
         'app-primary': '#00A9FF',
         'app-black': '#3e3e3e',
         'app-font': '#3e3e3e',
+        'app-font-gray': '#5e5e5e',
       },
     },
   },

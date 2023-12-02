@@ -1,4 +1,5 @@
 import Link, { LinkProps } from 'next/link'
+import { roboto } from '@/lib/fonts'
 
 type ButtonProps = {
     children: React.ReactNode,
@@ -17,7 +18,7 @@ type ButtonType = React.ButtonHTMLAttributes<HTMLButtonElement> & {
 export type ButtonTypeProps = ButtonType & ButtonProps
 
 export function Button({ children, className, variant, ...rest }: ButtonTypeProps) {
-    className = `inline-flex h-11 px-6 font-semibold uppercase border-0 outline-none text-sm items-center justify-center rounded-[40px] ${className}`
+    className = `inline-flex h-11 px-6 font-medium uppercase border-0 outline-none text-sm items-center justify-center rounded-[40px] ${roboto.className} ${className}`
 
     switch (variant) {
         case 'primary':

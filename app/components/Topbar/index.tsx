@@ -1,5 +1,6 @@
 import { getSession, getUserProfile } from '@/lib/actions'
 import Link from 'next/link'
+import { roboto } from '@/lib/fonts'
 import { AuthMenu } from './AuthMenu'
 
 export default async function Topbar() {
@@ -15,7 +16,7 @@ export default async function Topbar() {
                             Novelia
                         </Link>
                     </h1>
-                    <ul className="flex gap-8 uppercase text-sm font-semibold items-center">
+                    <ul className={ `flex gap-6 uppercase text-sm font-medium items-center ${roboto.className}` }>
                         <li>
                             <Link href="/" className="hover:text-primary">Home</Link>
                         </li>

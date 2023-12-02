@@ -5,15 +5,21 @@ import { useForm, SubmitHandler, Controller } from 'react-hook-form'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { FormSchema } from './schema'
-import { updateProfile } from './actions/server'
-import { uploadPhoto } from './actions/client'
+import { getUploadUrl } from '@/lib/functions'
+import { updateProfile } from './actions/updateProfile'
+import { uploadPhoto } from './actions/uploadPhoto'
+import { deletePhoto } from './actions/deletePhoto'
 import { getErrorMessage } from '@/lib/error-handling'
+import { roboto } from '@/lib/fonts'
 
-import { Textbox } from '@/components/Form'
-import { Button } from '@/components/Button'
-import { Alert } from '@/components/Alert'
-import { Spinner } from '@/components/Spinner'
-import { ImageCover } from '@/components/Images'
+import {
+    Alert,
+    Button,
+    Textbox,
+    ErrorMessage,
+    ImageCover,
+    Spinner,
+} from '@/components'
 
 interface FormUbahProfilProps {
     username?: string | null,
@@ -27,7 +33,7 @@ export function FormUbahProfil({ username, full_name, photo }: FormUbahProfilPro
         url: string,
         file: File | null,
     }>({
-        url: photo || '',
+        url: photo === '' ? '' : getUploadUrl(photo || ''),
         file: null,
     })
 
@@ -93,7 +99,21 @@ export function FormUbahProfil({ username, full_name, photo }: FormUbahProfilPro
         setLoading(true)
 
         try {
-            // upload photo
+            // if not change photo
+            if (image.url === photo) {
+                await updateProfile(data)
+
+                setMessage({
+                    type: 'success',
+                    text: 'Berhasil mengubah profil.',
+                })
+
+                setLoading(false)
+
+                return
+            }
+
+            // upload new photo
             if (image.file !== null) {
                 const uploadPhotoResult = await uploadPhoto(image.file)
 
@@ -101,8 +121,18 @@ export function FormUbahProfil({ username, full_name, photo }: FormUbahProfilPro
                     ...data,
                     photo: uploadPhotoResult,
                 })
-            } else {
-                await updateProfile(data)
+            }
+
+            // delete old photo
+            else {
+                await updateProfile({
+                    ...data,
+                    photo: '',
+                })
+
+                if (photo !== '') {
+                    await deletePhoto(photo)
+                }
             }
 
             setMessage({
@@ -122,14 +152,14 @@ export function FormUbahProfil({ username, full_name, photo }: FormUbahProfilPro
     }
 
     return (
-        <form className="mt-10" onSubmit={ handleSubmit(onSubmit) }>
+        <form className={ `mt-10 ${roboto.className}` } onSubmit={ handleSubmit(onSubmit) }>
             { message.type !== '' && (
                 <div className="mb-4">
                     <Alert variant={ message.type } message={ message.text } />
                 </div>
             ) }
 
-            <div className="mb-6">
+            <div className="mb-10">
                 <div className="relative mx-auto w-[150px]">
                     <ImageCover className="rounded-full" src={ image.url } widthRatio={ 1 } heightRatio={ 1 } bgDefault="#ababab" />
                     { image.url === '' ?
@@ -144,7 +174,8 @@ export function FormUbahProfil({ username, full_name, photo }: FormUbahProfilPro
                 ) }
             </div>
 
-            <div className="mb-4">
+            <div className="mb-6">
+                <label htmlFor="username" className="block mb-1 font-semibold text-sm text-app-font-gray uppercase">Username</label>
                 <Controller
                     control={ control }
                     name="username"
@@ -159,11 +190,12 @@ export function FormUbahProfil({ username, full_name, photo }: FormUbahProfilPro
                     />
 
                 { errors.fullname && (
-                    FormErrorMessage({ message: errors.fullname.message || 'Username harus diisi' })
+                    ErrorMessage({ message: errors.fullname.message || 'Username harus diisi' })
                 ) }
             </div>
 
             <div className="mb-6">
+                <label htmlFor="fullname" className="block mb-1 font-semibold text-sm text-app-font-gray uppercase">Full Name</label>
                 <Controller
                     control={ control }
                     name="fullname"
@@ -178,7 +210,7 @@ export function FormUbahProfil({ username, full_name, photo }: FormUbahProfilPro
                     />
 
                 { errors.fullname && (
-                    FormErrorMessage({ message: errors.fullname.message || 'Nama lengkap harus diisi' })
+                    ErrorMessage({ message: errors.fullname.message || 'Nama lengkap harus diisi' })
                 ) }
             </div>
             <div>
@@ -192,13 +224,5 @@ export function FormUbahProfil({ username, full_name, photo }: FormUbahProfilPro
                 </Button>
             </div>
         </form>
-    )
-}
-
-function FormErrorMessage({ message }: { message: string }) {
-    return (
-        <p className="mt-1 text-sm text-red-500 text-left">
-            { message }
-        </p>
     )
 }
